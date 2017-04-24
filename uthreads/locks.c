@@ -1,11 +1,11 @@
 #include <linux/kernel.h>
 #include <linux/syscalls.h>
 #include <linux/mutex.h>
-// #include <linux/ulocks.h>
 
-asmlinkage long sys_init_mutex(struct uthread_mutex * umutex)
+asmlinkage long sys_init_mutex()
 {
 	printk(KERN_INFO "create mutex called.\n");
+	
 	mutex_init(&(umutex->lock));
 	return 0;	
 }

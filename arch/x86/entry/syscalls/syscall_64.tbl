@@ -343,6 +343,7 @@
 342	common  lock_mutex		sys_lock_mutex
 343	common  unlock_mutex	sys_unlock_mutex
 344	common  destroy_mutex	sys_destroy_mutex
+345 common  uthread_create  sys_uthread_create
 
 #
 # x32-specific system call numbers start at 512 to avoid cache impact
