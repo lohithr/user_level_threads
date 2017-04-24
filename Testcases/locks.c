@@ -2,24 +2,17 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <linux/kernel.h>
-#include <linux/mutex.h>
-
-struct uthread_mutex
-{
-	struct mutex lock;
-};
 
 int main(void) {
-	long ID1, ID2;
-	struct uthread_mutex umutex;
+	long ID1, ID2, ID3;
 
-	ID1 = syscall(341,&umutex);
-	printf ("syscall(341)=%ld\n", ID1);
-	ID1 = syscall(342,&umutex);
+	ID2 = syscall(341);
+	printf ("syscall(341)=%ld\n", ID2);
+	ID1 = syscall(342,ID2);
 	printf ("syscall(342)=%ld\n", ID1);
-	ID1 = syscall(343,&umutex);
+	ID1 = syscall(343,ID2);
 	printf ("syscall(343)=%ld\n", ID1);
-	ID1 = syscall(344,&umutex);
+	ID1 = syscall(344,ID2);
 	printf ("syscall(344)=%ld\n", ID1);
 	ID1 = syscall(345,NULL,NULL);
 	printf ("syscall(345)=%ld\n", ID1);

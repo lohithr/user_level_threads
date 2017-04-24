@@ -79,7 +79,6 @@ union bpf_attr;
 #include <linux/quota.h>
 #include <linux/key.h>
 #include <trace/syscall.h>
-#include <linux/ulocks.h>
 /*
  * __MAP - apply a macro to syscall arguments
  * __MAP(n, m, t1, a1, t2, a2, ..., tn, an) will expand to
@@ -903,9 +902,9 @@ asmlinkage long sys_pkey_mprotect(unsigned long start, size_t len,
 asmlinkage long sys_pkey_alloc(unsigned long flags, unsigned long init_val);
 asmlinkage long sys_pkey_free(int pkey);
 
-asmlinkage long sys_init_mutex(struct uthread_mutex __user * umutex);
-asmlinkage long sys_lock_mutex(struct uthread_mutex __user * umutex);
-asmlinkage long sys_unlock_mutex(struct uthread_mutex __user * umutex);
-asmlinkage long sys_destroy_mutex(struct uthread_mutex __user * umutex);
+asmlinkage long sys_init_mutex(void);
+asmlinkage long sys_lock_mutex(int uid);
+asmlinkage long sys_unlock_mutex(int uid);
+asmlinkage long sys_destroy_mutex(int uid);
 asmlinkage long sys_uthread_create(int (*fn)(void *), void __user *arg);
 #endif
