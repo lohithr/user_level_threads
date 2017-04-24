@@ -907,5 +907,5 @@ asmlinkage long sys_init_mutex(struct uthread_mutex __user * umutex);
 asmlinkage long sys_lock_mutex(struct uthread_mutex __user * umutex);
 asmlinkage long sys_unlock_mutex(struct uthread_mutex __user * umutex);
 asmlinkage long sys_destroy_mutex(struct uthread_mutex __user * umutex);
-asmlinkage long sys_uthread_create(int (*fn)(void *), void __user *arg);
+asmlinkage long sys_uthread_create(void);
 #endif

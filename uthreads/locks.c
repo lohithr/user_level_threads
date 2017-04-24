@@ -2,7 +2,7 @@
 #include <linux/syscalls.h>
 #include <linux/mutex.h>
 
-asmlinkage long sys_init_mutex()
+asmlinkage long sys_init_mutex(struct uthread_mutex * umutex)
 {
 	printk(KERN_INFO "create mutex called.\n");
 	
