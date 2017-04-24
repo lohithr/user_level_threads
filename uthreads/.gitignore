@@ -1,0 +1,6 @@
+#
+# generated files
+#
+modules*
+*.cmd
+!.gitignore

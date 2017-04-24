@@ -339,6 +339,11 @@
 330	common	pkey_alloc		sys_pkey_alloc
 331	common	pkey_free		sys_pkey_free
 
+341	common  create_mutex	sys_init_mutex
+342	common  lock_mutex		sys_lock_mutex
+343	common  unlock_mutex	sys_unlock_mutex
+344	common  destroy_mutex	sys_destroy_mutex
+
 #
 # x32-specific system call numbers start at 512 to avoid cache impact
 # for native 64-bit operation.
