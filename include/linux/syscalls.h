@@ -902,9 +902,11 @@ asmlinkage long sys_pkey_mprotect(unsigned long start, size_t len,
 asmlinkage long sys_pkey_alloc(unsigned long flags, unsigned long init_val);
 asmlinkage long sys_pkey_free(int pkey);
 
+
 asmlinkage long sys_init_mutex(void);
 asmlinkage long sys_lock_mutex(int uid);
 asmlinkage long sys_unlock_mutex(int uid);
 asmlinkage long sys_destroy_mutex(int uid);
-asmlinkage long sys_uthread_create(int (*fn)(void *), void __user *arg);
+asmlinkage long sys_uthread_create(void);
+
 #endif

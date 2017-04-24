@@ -4,7 +4,7 @@
 #include <linux/idr.h>	
 #include <linux/slab.h>
 
-asmlinkage long sys_init_mutex()
+asmlinkage long sys_init_mutex(struct uthread_mutex * umutex)
 {
 	struct mutex *ulock;
 	int uid;

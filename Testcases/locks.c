@@ -14,8 +14,8 @@ int main(void) {
 	printf ("syscall(343)=%ld\n", ID1);
 	ID1 = syscall(344,ID2);
 	printf ("syscall(344)=%ld\n", ID1);
-	ID1 = syscall(345,NULL,NULL);
+	ID1 = syscall(345);
 	printf ("syscall(345)=%ld\n", ID1);
-	
+
 	return 0;
 }
