@@ -1,17 +1,25 @@
 #include "uthread.h"
-#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int G[10];
 
 int func(void * arg)
 {
-	// printf("%d\n", *((int *)arg));
-	return 0;
+	int * P = (int *) arg;
+
+	for (int i = 0; i < 10; ++i) printf("%d\n", P[i]);
+
+	exit(0);
 }
 
 int main()
 {
-	int i, j;
-	j = 100;
-	i = uthread_create(func, NULL);
-	// printf("%d\n", i);
+	int L[10];
+
+	for (int i = 0; i < 10; ++i) G[i] = 300 + i;
+	for (int i = 0; i < 10; ++i) L[i] = 300 + i;
+
+	uthread_create(func, L);
 	return 0;
 }

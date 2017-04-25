@@ -83,6 +83,7 @@
 #include <asm/mmu_context.h>
 #include <asm/cacheflush.h>
 #include <asm/tlbflush.h>
+#include <asm/processor.h>
 
 #include <trace/events/sched.h>
 
@@ -1906,18 +1907,28 @@ struct task_struct *fork_idle(int cpu)
 	return task;
 }
 
-/*
- *  Ok, this is the main fork-routine.
- *
- * It copies the process, and if successful kick-starts
- * it and waits for it to finish using the VM if required.
- */
 long _do_fork(unsigned long clone_flags,
 	      unsigned long stack_start,
 	      unsigned long stack_size,
 	      int __user *parent_tidptr,
 	      int __user *child_tidptr,
 	      unsigned long tls)
+{
+	return _do_do_fork(clone_flags, stack_start, stack_size, parent_tidptr, child_tidptr, tls, NULL);
+}
+
+/*
+ *  Ok, this is the main fork-routine.
+ *
+ * It copies the process, and if successful kick-starts
+ * it and waits for it to finish using the VM if required.
+ */
+long _do_do_fork(unsigned long clone_flags,
+	      unsigned long stack_start,
+	      unsigned long stack_size,
+	      int __user *parent_tidptr,
+	      int __user *child_tidptr,
+	      unsigned long tls, unsigned long * uthread_ptrs)
 {
 	struct task_struct *p;
 	int trace = 0;
@@ -1944,6 +1955,17 @@ long _do_fork(unsigned long clone_flags,
 	p = copy_process(clone_flags, stack_start, stack_size,
 			 child_tidptr, NULL, trace, tls, NUMA_NO_NODE);
 	add_latent_entropy();
+
+	/* If user-thread */
+	if(uthread_ptrs != NULL)
+	{
+		struct pt_regs * childregs;
+		childregs = task_pt_regs(p);
+		childregs->ip = uthread_ptrs[0];
+		childregs->di = uthread_ptrs[1];
+		kfree(uthread_ptrs);
+	}
+
 	/*
 	 * Do this prior waking up the new thread - the thread pointer
 	 * might get invalid after that point, if the thread exits quickly.

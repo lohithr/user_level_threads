@@ -4,22 +4,13 @@
 #include <linux/idr.h>	
 #include <linux/slab.h>
 
-asmlinkage long sys_init_mutex(struct uthread_mutex * umutex)
+asmlinkage long sys_init_mutex()
 {
 	struct mutex *ulock;
 	int uid;
 	printk(KERN_INFO "create mutex called.\n");
 	ulock = kmalloc(sizeof(struct mutex),GFP_KERNEL);
-	// do {
-	// 	if(!idr_pre_get(&(current->locks_map), GFP_KERNEL))
-	// 	{
-	// 		return -ENOSPC;
-	// 	}
-	// 	ret = idr_get_new(&(current->locks_map), &ulock , &uid);
-	// } while (ret == -EAGAIN);
 	uid = idr_alloc(&(current->locks_map), &ulock , 1 , 100, GFP_KERNEL);
-
-
 	return uid;	
 }
 
@@ -54,6 +45,5 @@ asmlinkage long sys_destroy_mutex(int uid)
 		return -EINVAL;
 	idr_remove(&(current->locks_map),uid);
 	mutex_destroy(umutex);
-	// kfree(umutex);
 	return 0;
 }

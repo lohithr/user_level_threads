@@ -907,6 +907,6 @@ asmlinkage long sys_init_mutex(void);
 asmlinkage long sys_lock_mutex(int uid);
 asmlinkage long sys_unlock_mutex(int uid);
 asmlinkage long sys_destroy_mutex(int uid);
-asmlinkage long sys_uthread_create(void);
+asmlinkage long sys_uthread_create(int (*fn)(void *), void * arg);
 
 #endif
