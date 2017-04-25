@@ -18,3 +18,39 @@ asmlinkage long sys_uthread_create(int (*fn)(void *), void * arg)
 
 	return _do_do_fork(SIGCHLD | CLONE_FILES | CLONE_FS | CLONE_VM | CLONE_SIGHAND, stack_ptr, STACK_SZ, NULL, NULL, 0, uthread_ptrs);
 }
+
+asmlinkage long sys_uthread_wait(void)
+{
+	struct task_struct *child;
+	list_for_each_entry(child,&(current->children),children){
+		sys_wait4(child->pid, 0, 0, NULL);
+	}
+	return 0;
+}
+
+asmlinkage long sys_uthread_exit(void)
+{
+	do_exit((0&0xff)<<8);
+	return 0;
+}
+
+asmlinkage long sys_uthread_setpriority(void)
+{
+	return 0;
+}
+
+asmlinkage long sys_uthread_getpriority(void)
+{
+	return 0;
+}
+
+asmlinkage long sys_uthread_setscheduler(void)
+{
+	return 0;
+}
+
+asmlinkage long sys_uthread_getscheduler(void)
+{
+	return 0;
+}
+

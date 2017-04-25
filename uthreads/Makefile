@@ -1,1 +1,1 @@
-obj-y:=locks.o uthread_create.o
+obj-y:=locks.o uthread.o

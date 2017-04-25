@@ -908,5 +908,11 @@ asmlinkage long sys_lock_mutex(int uid);
 asmlinkage long sys_unlock_mutex(int uid);
 asmlinkage long sys_destroy_mutex(int uid);
 asmlinkage long sys_uthread_create(int (*fn)(void *), void * arg);
+asmlinkage long sys_uthread_wait(void);
+asmlinkage long sys_uthread_exit(void);
+asmlinkage long sys_uthread_setpriority(void);
+asmlinkage long sys_uthread_getpriority(void);
+asmlinkage long sys_uthread_setscheduler(void);
+asmlinkage long sys_uthread_getscheduler(void);
 
 #endif
