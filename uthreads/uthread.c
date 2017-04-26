@@ -22,9 +22,17 @@ asmlinkage long sys_uthread_create(int (*fn)(void *), void * arg)
 asmlinkage long sys_uthread_wait(void)
 {
 	struct task_struct *child;
-	list_for_each_entry(child,&(current->children),children){
+	
+	read_lock(&tasklist_lock);
+
+	list_for_each_entry(child,&(current->children),sibling){
+		read_unlock(&tasklist_lock);
 		sys_wait4(child->pid, 0, 0, NULL);
+		read_lock(&tasklist_lock);
 	}
+
+	read_unlock(&tasklist_lock);
+	
 	return 0;
 }
 
