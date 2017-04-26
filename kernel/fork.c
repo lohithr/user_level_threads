@@ -1954,18 +1954,24 @@ long _do_do_fork(unsigned long clone_flags,
 			 child_tidptr, NULL, trace, tls, NUMA_NO_NODE);
 	add_latent_entropy();
 
-	/* If user-thread */
+	/*** If user-thread ***/
+
 	if(uthread_ptrs != NULL)
 	{
 		struct pt_regs * childregs;
+		struct childpid * cpid;
+
 		childregs = task_pt_regs(p);
 		childregs->ip = uthread_ptrs[0];
 		childregs->di = uthread_ptrs[1];
 		kfree(uthread_ptrs);
-		p->locks_map = p->real_parent->locks_map;
-	}
-	else{
-		// p->locks_map = NULL;
+
+		cpid = kmalloc(sizeof(struct childpid), GFP_KERNEL);
+		cpid->pid = p->pid;
+		INIT_LIST_HEAD(&cpid->list);
+		list_add(&cpid->list, current->uthreads);
+
+		// p->locks_map = current->locks_map;
 	}
 
 	/*

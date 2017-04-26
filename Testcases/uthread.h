@@ -25,7 +25,7 @@ int uthread_create(int (*fn)(void *), void *arg)
 	return syscall(345, fn, arg);
 }
 
-int uthread_join(void)
+int uthread_wait(void)
 {
 	return syscall(346);
 }
