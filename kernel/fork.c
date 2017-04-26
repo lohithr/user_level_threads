@@ -1762,8 +1762,6 @@ static __latent_entropy struct task_struct *copy_process(
 		p->parent_exec_id = current->self_exec_id;
 	}
 
-	idr_init(&(p->locks_map));
-
 	spin_lock(&current->sighand->siglock);
 
 	/*
@@ -1964,6 +1962,10 @@ long _do_do_fork(unsigned long clone_flags,
 		childregs->ip = uthread_ptrs[0];
 		childregs->di = uthread_ptrs[1];
 		kfree(uthread_ptrs);
+		p->locks_map = p->real_parent->locks_map;
+	}
+	else{
+		// p->locks_map = NULL;
 	}
 
 	/*

@@ -2002,7 +2002,7 @@ struct task_struct {
 	/* A live task holds one reference. */
 	atomic_t stack_refcount;
 #endif
-	struct idr locks_map;
+	struct idr *locks_map;
 /* CPU-specific state of this task */
 	struct thread_struct thread;
 /*
