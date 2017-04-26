@@ -1970,8 +1970,6 @@ long _do_do_fork(unsigned long clone_flags,
 		cpid->pid = p->pid;
 		INIT_LIST_HEAD(&cpid->list);
 		list_add(&cpid->list, current->uthreads);
-
-		// p->locks_map = current->locks_map;
 	}
 
 	/*
