@@ -9,6 +9,14 @@ asmlinkage long sys_uthread_create(int (*fn)(void *), void * arg)
 	unsigned long stack_ptr;
 	unsigned long * uthread_ptrs;
 
+	printk(KERN_INFO "sys_uthread_create called.\n");
+
+	if(current->uthreads == NULL)
+	{
+		current->uthreads = kmalloc(sizeof(struct list_head), GFP_KERNEL);
+		INIT_LIST_HEAD(current->uthreads);
+	}
+
 	stack_ptr = sys_brk(0);
 	stack_ptr = sys_brk(stack_ptr + STACK_SZ);
 
@@ -21,44 +29,45 @@ asmlinkage long sys_uthread_create(int (*fn)(void *), void * arg)
 
 asmlinkage long sys_uthread_wait(void)
 {
-	struct task_struct *child;
-	
-	read_lock(&tasklist_lock);
+	struct childpid * cpid;
 
-	list_for_each_entry(child,&(current->children),sibling){
-		read_unlock(&tasklist_lock);
-		sys_wait4(child->pid, 0, 0, NULL);
-		read_lock(&tasklist_lock);
+	list_for_each_entry(cpid, current->uthreads, list)
+	{
+		sys_wait4(cpid->pid, 0, 0, NULL);
 	}
 
-	read_unlock(&tasklist_lock);
-	
+	printk(KERN_INFO "sys_uthread_wait called.\n");
+
 	return 0;
 }
 
 asmlinkage long sys_uthread_exit(void)
 {
 	do_exit((0&0xff)<<8);
+	printk(KERN_INFO "sys_uthread_exit called.\n");
 	return 0;
 }
 
 asmlinkage long sys_uthread_setpriority(void)
 {
+	printk(KERN_INFO "sys_uthread_setpriority called.\n");
 	return 0;
 }
 
 asmlinkage long sys_uthread_getpriority(void)
 {
+	printk(KERN_INFO "sys_uthread_getpriority called.\n");
 	return 0;
 }
 
 asmlinkage long sys_uthread_setscheduler(void)
 {
+	printk(KERN_INFO "sys_uthread_setscheduler called.\n");
 	return 0;
 }
 
 asmlinkage long sys_uthread_getscheduler(void)
 {
+	printk(KERN_INFO "sys_uthread_getscheduler called.\n");
 	return 0;
 }
-

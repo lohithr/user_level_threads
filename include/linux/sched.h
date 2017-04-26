@@ -1508,6 +1508,12 @@ struct tlbflush_unmap_batch {
 	bool writable;
 };
 
+struct childpid
+{
+	pid_t pid;
+	struct list_head list;
+};
+
 struct task_struct {
 #ifdef CONFIG_THREAD_INFO_IN_TASK
 	/*
@@ -1516,6 +1522,10 @@ struct task_struct {
 	 */
 	struct thread_info thread_info;
 #endif
+
+	struct list_head * uthreads;
+	struct idr * locks_map;
+
 	volatile long state;	/* -1 unrunnable, 0 runnable, >0 stopped */
 	void *stack;
 	atomic_t usage;
@@ -2002,7 +2012,7 @@ struct task_struct {
 	/* A live task holds one reference. */
 	atomic_t stack_refcount;
 #endif
-	struct idr *locks_map;
+
 /* CPU-specific state of this task */
 	struct thread_struct thread;
 /*

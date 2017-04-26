@@ -6,39 +6,41 @@
 
 asmlinkage long sys_init_mutex()
 {
-	struct mutex *ulock;
+	struct mutex * ulock;
 	int uid;
-	printk(KERN_INFO "create mutex called.\n");
-	ulock = kmalloc(sizeof(struct mutex),GFP_KERNEL);
-	mutex_init(ulock);
 
-	if(!current->locks_map){
-		current->locks_map = kmalloc(sizeof(struct idr),GFP_KERNEL);
+	printk(KERN_INFO "sys_init_mutex called.\n");
+
+	if(current->locks_map == NULL)
+	{
+		current->locks_map = kmalloc(sizeof(struct idr), GFP_KERNEL);
 		idr_init(current->locks_map);
 	}
 
-	uid = idr_alloc(current->locks_map, ulock , 1 , 100, GFP_KERNEL);
+	ulock = kmalloc(sizeof(struct mutex),GFP_KERNEL);
+	mutex_init(ulock);
+	uid = idr_alloc(current->locks_map, ulock, 1, 100, GFP_KERNEL);
 	return uid;
 }
 
 asmlinkage long sys_lock_mutex(int uid)
 {
-	struct mutex *umutex;
+	struct mutex * umutex;
 
 	printk(KERN_INFO "sys_lock_mutex called.\n");
-	umutex = idr_find(current->locks_map,uid);
+	umutex = idr_find(current->locks_map, uid);
 	if(!umutex)
 		return -EINVAL; 
 	mutex_lock(umutex);
-	
 	return 0;
 }
 
 asmlinkage long sys_unlock_mutex(int uid)
 {
-	struct mutex *umutex;
+	struct mutex * umutex;
+
 	printk(KERN_INFO "sys_unlock_mutex called.\n");
-	umutex = idr_find(current->locks_map,uid);
+	umutex = idr_find(current->locks_map, uid);
 	if(!umutex)
 		return -EINVAL;
 	mutex_unlock(umutex);
@@ -47,13 +49,13 @@ asmlinkage long sys_unlock_mutex(int uid)
 
 asmlinkage long sys_destroy_mutex(int uid)
 {
-	struct mutex *umutex;
+	struct mutex * umutex;
+
 	printk(KERN_INFO "sys_destroy_mutex called.\n");
-	umutex = idr_find(current->locks_map,uid);
+	umutex = idr_find(current->locks_map, uid);
 	if(!umutex)
 		return -EINVAL;
-	idr_remove(current->locks_map,uid);
-	// mutex_destroy(umutex);
+	idr_remove(current->locks_map, uid);
 	kfree(umutex);
 	return 0;
 }
