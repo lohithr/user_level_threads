@@ -20,7 +20,7 @@ int destroy_mutex(int uid)
 	return syscall(344,uid);
 }
 
-int uthread_create(int (*fn)(void *), void *arg)
+int uthread_create(void (*fn)(void *), void *arg)
 {
 	return syscall(345, fn, arg);
 }

@@ -4,7 +4,7 @@
 
 #define STACK_SZ 1024 * 64
 
-asmlinkage long sys_uthread_create(int (*fn)(void *), void * arg)
+asmlinkage long sys_uthread_create(void (*fn)(void *), void * arg)
 {
 	unsigned long stack_ptr;
 	unsigned long * uthread_ptrs;
