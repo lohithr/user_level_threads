@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 /* this function is run by the second thread */
-int inc_x(void *x_void_ptr)
+void inc_x(void *x_void_ptr)
 {
 
 /* increment x to 100 */
@@ -24,7 +24,7 @@ int x = 0, y = 0,pid;
 printf("x: %d, y: %d\n", x, y);
 
 /* create a second thread which executes inc_x(&x) */
-pid = uthread_create(inc_x, &x);
+pid = uthread_create(&inc_x, &x);
 printf("pid: %d\n",pid);
 
 /* increment y to 100 in the first thread */
