@@ -2,7 +2,7 @@
 #include <linux/syscalls.h>
 #include <linux/slab.h>
 
-#define STACK_SZ 1024 * 64
+#define STACK_SZ 2 * 1024 * 1024
 
 asmlinkage long sys_uthread_create(void (*fn)(void *), void * arg)
 {
@@ -50,31 +50,7 @@ asmlinkage long sys_uthread_wait(void)
 
 asmlinkage long sys_uthread_exit(void)
 {
-	do_exit((0&0xff)<<8);
 	printk(KERN_INFO "sys_uthread_exit called.\n");
-	return 0;
-}
-
-asmlinkage long sys_uthread_setpriority(void)
-{
-	printk(KERN_INFO "sys_uthread_setpriority called.\n");
-	return 0;
-}
-
-asmlinkage long sys_uthread_getpriority(void)
-{
-	printk(KERN_INFO "sys_uthread_getpriority called.\n");
-	return 0;
-}
-
-asmlinkage long sys_uthread_setscheduler(void)
-{
-	printk(KERN_INFO "sys_uthread_setscheduler called.\n");
-	return 0;
-}
-
-asmlinkage long sys_uthread_getscheduler(void)
-{
-	printk(KERN_INFO "sys_uthread_getscheduler called.\n");
-	return 0;
+	do_exit((0&0xff)<<8);
+	return -1;
 }

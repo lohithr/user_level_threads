@@ -346,10 +346,6 @@
 345 common  uthread_create	sys_uthread_create
 346 common  uthread_wait	sys_uthread_wait
 347 common  uthread_exit	sys_uthread_exit
-348 common  uthread_setpriority	sys_uthread_setpriority
-349 common  uthread_getpriority	sys_uthread_getpriority
-350 common  uthread_setscheduler	sys_uthread_setscheduler
-351 common  uthread_getscheduler	sys_uthread_getscheduler
 
 #
 # x32-specific system call numbers start at 512 to avoid cache impact
