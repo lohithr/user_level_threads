@@ -29,11 +29,18 @@ asmlinkage long sys_uthread_create(void (*fn)(void *), void * arg)
 
 asmlinkage long sys_uthread_wait(void)
 {
-	struct childpid * cpid;
+	struct childpid * cpid, * next;
 
-	list_for_each_entry(cpid, current->uthreads, list)
+	if(current->uthreads != NULL)
 	{
-		sys_wait4(cpid->pid, 0, 0, NULL);
+		list_for_each_entry_safe(cpid, next, current->uthreads, list)
+		{
+			sys_wait4(cpid->pid, 0, 0, NULL);
+			kfree(cpid);
+		}
+
+		kfree(current->uthreads);
+		current->uthreads = NULL;
 	}
 
 	printk(KERN_INFO "sys_uthread_wait called.\n");
