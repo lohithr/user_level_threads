@@ -51,15 +51,12 @@ void func(void* temp)
 {
 	int n = *(int *)temp;
 	printf("\n Philosopher %d is thinking ",n);
-	// lock_mutex(chopstick[n]);
-	// lock_mutex(chopstick[(n+1)%5]);
+	lock_mutex(chopstick[n]);
+	lock_mutex(chopstick[(n+1)%5]);
 	printf("\n Philosopher %d is eating ",n);
-	// int temp1=1,i;
-	// for (i = 0; i < 50; ++i)
-	// {
-	// 	temp1*=(i+1);
-	// }
-	// unlock_mutex(chopstick[n]);
-	// unlock_mutex(chopstick[(n+1)%5]);
+	sleep(3);
+	unlock_mutex(chopstick[n]);
+	unlock_mutex(chopstick[(n+1)%5]);
 	printf("\n Philosopher %d Finished eating ",n);
+	uthread_exit();
 }
