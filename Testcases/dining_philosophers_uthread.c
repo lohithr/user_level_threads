@@ -54,7 +54,7 @@ void func(void* temp)
 	lock_mutex(chopstick[n]);
 	lock_mutex(chopstick[(n+1)%5]);
 	printf("\n Philosopher %d is eating ",n);
-	sleep(3);
+	sleep(1);
 	unlock_mutex(chopstick[n]);
 	unlock_mutex(chopstick[(n+1)%5]);
 	printf("\n Philosopher %d Finished eating ",n);

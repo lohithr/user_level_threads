@@ -4,7 +4,7 @@
 
 int x;
 
-int inc_x(void *x_void_ptr)
+void inc_x(void *x_void_ptr)
 {
 	int *x_ptr = (int *)x_void_ptr;
 	int count = 0;

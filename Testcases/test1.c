@@ -7,7 +7,7 @@ void inc_x(void *x_void_ptr)
 
 	int *x_ptr = (int *)x_void_ptr;
 	while(++(*x_ptr) < 100);
-	printf("x increment finished: %d\n",*x_ptr)
+	printf("x increment finished: %d\n",*x_ptr);
 	uthread_exit();
 
 }
@@ -24,7 +24,7 @@ int main()
 
 	printf("y increment finished\n");
 	
-	waitpid(pid,0,0);
+	uthread_wait();
 	printf("x: %d, y: %d\n", x, y);
 
 	return 0;

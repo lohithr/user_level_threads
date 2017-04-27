@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <pthread.h>
 
 void *func(int n);
@@ -55,7 +56,7 @@ void *func(int n)
 	pthread_mutex_lock(&chopstick[n]);
 	pthread_mutex_lock(&chopstick[(n+1)%5]);
 	printf("\nPhilosopher %d is eating ",n);
-	sleep(3);
+	sleep(1);
 	pthread_mutex_unlock(&chopstick[n]);
 	pthread_mutex_unlock(&chopstick[(n+1)%5]);
 	printf("\nPhilosopher %d Finished eating ",n);
