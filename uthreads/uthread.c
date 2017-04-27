@@ -2,7 +2,7 @@
 #include <linux/syscalls.h>
 #include <linux/slab.h>
 
-#define STACK_SZ 1024 * 64
+#define STACK_SZ 2 * 1024 * 1024
 
 asmlinkage long sys_uthread_create(void (*fn)(void *), void * arg)
 {
