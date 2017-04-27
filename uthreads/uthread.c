@@ -50,7 +50,7 @@ asmlinkage long sys_uthread_wait(void)
 
 asmlinkage long sys_uthread_exit(void)
 {
-	do_exit((0&0xff)<<8);
 	printk(KERN_INFO "sys_uthread_exit called.\n");
-	return 0;
+	do_exit((0&0xff)<<8);
+	return -1;
 }
