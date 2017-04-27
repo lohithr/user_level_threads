@@ -1,26 +1,29 @@
 #include <unistd.h>
 
-int init_mutex(void)
+typedef int Thread_id;
+typedef int Mutex_id;
+
+Mutex_id init_mutex(void)
 {
 	return syscall(341);
 }
 
-int lock_mutex(int uid)
+int lock_mutex(Mutex_id uid)
 {
-	return syscall(342,uid);
+	return syscall(342, uid);
 }
 
-int unlock_mutex(int uid)
+int unlock_mutex(Mutex_id uid)
 {
-	return syscall(343,uid);
+	return syscall(343, uid);
 }
 
-int destroy_mutex(int uid)
+int destroy_mutex(Mutex_id uid)
 {
-	return syscall(344,uid);
+	return syscall(344, uid);
 }
 
-int uthread_create(void (*fn)(void *), void *arg)
+int uthread_create(void (*fn)(void *), void * arg)
 {
 	return syscall(345, fn, arg);
 }

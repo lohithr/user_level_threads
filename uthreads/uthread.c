@@ -54,27 +54,3 @@ asmlinkage long sys_uthread_exit(void)
 	printk(KERN_INFO "sys_uthread_exit called.\n");
 	return 0;
 }
-
-asmlinkage long sys_uthread_setpriority(void)
-{
-	printk(KERN_INFO "sys_uthread_setpriority called.\n");
-	return 0;
-}
-
-asmlinkage long sys_uthread_getpriority(void)
-{
-	printk(KERN_INFO "sys_uthread_getpriority called.\n");
-	return 0;
-}
-
-asmlinkage long sys_uthread_setscheduler(void)
-{
-	printk(KERN_INFO "sys_uthread_setscheduler called.\n");
-	return 0;
-}
-
-asmlinkage long sys_uthread_getscheduler(void)
-{
-	printk(KERN_INFO "sys_uthread_getscheduler called.\n");
-	return 0;
-}
