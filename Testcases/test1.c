@@ -1,5 +1,6 @@
 #include "uthread.h"
 #include <stdio.h>
+#include <unistd.h>
 
 
 void inc_x(void *x_void_ptr)
@@ -8,6 +9,7 @@ void inc_x(void *x_void_ptr)
 	int *x_ptr = (int *)x_void_ptr;
 	while(++(*x_ptr) < 100);
 	printf("x increment finished: %d\n",*x_ptr);
+	sleep(5);
 	uthread_exit();
 
 }
